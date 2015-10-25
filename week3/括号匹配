@@ -1,0 +1,93 @@
+/*Time Limit: 1sec    Memory Limit:256MB Description
+在编译C/C++程序时，我们可以发现，如果（）、[ ]、{ }等左右不匹配或嵌套不合理的话编译器就会报错，这个是怎么实现的呢？ 这次我们就来模拟一下编译器检查大、中、小括号是否匹配和嵌套是否合理的功能吧。 
+
+Tips: ( [)]是嵌套不合理的例子，嵌套合理要求匹配符号中间的其他符号必须是匹配的，例如: ( [ ] )、 ( {} [( )] ) 。 
+
+！注意，输入的串中可能会有空格（0个或多个）和Tab或其他字符。 
+！注意， 输入串不会是空串。 
+
+匹配的例子： 
+() 
+[] 
+{} 
+()[]{} 
+([()]){} 
+( { } [ ] ) 
+
+不匹配的例子： 
+( 
+) 
+((){} 
+(){ 
+() } 
+([ )] 
+Input
+第一行是一个整数代表测试样例数 
+接下来每个测试样例是一行单独的字符串。 
+Output
+对每一个测试样例，如果匹配就是输出True， 不匹配则输出False， 每个样例的输出结果是单独的一行。 
+Sample Input
+ Copy sample input to clipboard 
+5
+( {} () )         
+(a*)
+([  ( ) ])
+( [ ) ] 
+( () )) )Sample Output
+True
+True
+True
+False
+False
+*/
+// Problem#: 15354
+// Submission#: 3899508
+// The source code is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License
+// URI: http://creativecommons.org/licenses/by-nc-sa/3.0/
+// All Copyright reserved by Informatic Lab of Sun Yat-sen University
+#include<iostream>
+#include<stack>
+#include<string>
+#include<cmath>
+using namespace std;
+int main() {
+	stack<char> opening;
+	string str;
+	char symbol;
+	bool is_match = true;
+	string count;
+		int flag = 0;
+		int num = 0;
+	getline(cin, count);
+	int i = 0, a = count.size()-1;
+	while (a) {
+		num = num + pow(10,a) * (count[i++]-'0');
+		a--;
+	}
+	num += count[i] - '0';
+	while (num--) {
+		getline(cin, str);
+		for (int i = 0; i < str.size() && is_match; i++) {
+			symbol = str[i];
+			if (str[0] == ')' || str[0] == '}' || str[0] == ']') flag = 1;
+			if (symbol == '(' || symbol == '[' || symbol == '{')
+				opening.push(symbol);
+			if (symbol == ')' || symbol == ']' || symbol == '}') {
+				if (opening.empty()) is_match = false;
+				else {
+					char match;
+					match = opening.top();
+					opening.pop();
+					is_match = (match == '{'&&symbol == '}') || (match == '['&&symbol == ']') || (match == '('&&symbol == ')');
+				}
+			}
+		}
+		if (opening.empty() && flag == 0 && is_match == true) cout << "True\n";
+		else {
+			while (!opening.empty()) opening.pop();
+			cout << "False\n";
+			flag = 0;
+		}
+		is_match = true;
+	}
+}                                 
