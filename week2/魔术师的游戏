@@ -1,0 +1,65 @@
+/*魔术师手中有m张牌，牌的编号为1-n，魔术师预先将牌排好后迭在一起，牌面朝下。对观众说：我不看牌，只数数就可以猜到每张牌是什么，我大声数数，你们听。不信？你们就看。
+
+魔术师按顺序从上到下数手中的牌，第一次数1，将第一张牌（最上面的那张牌）翻过来放到桌面，正好是牌1。第二次数1、2，将第一张牌放到这迭牌的下面，将第二张牌翻过来放到桌面，正好是牌2。第三次数1、2、3，将前面两张依次放在这迭牌的下面，再翻第三张牌放到桌面，正好是牌3。这样依次进行，将n张牌全翻过来，准确无误。问魔术师手中的牌原始次序是怎样安排的？
+
+Input
+输入第一行为一个整数T(1<=T<=10)，表示有T组测试数据；
+
+对于每组测试数据格式如下：
+第一行为1个整数n（1<=n<=26）。
+ 
+Output
+﻿为每个测试样例单独一行输出魔术师手中牌的原始次序，每个牌号之后跟一个空格。
+
+Sample Input
+ Copy sample input to clipboard 
+5
+1
+2
+3
+4
+13 
+Sample Output
+1 
+1 2 
+1 3 2 
+1 4 2 3 
+1 8 2 5 10 3 12 11 9 4 7 6 13 
+*/
+// Problem#: 15252
+// Submission#: 3853581
+// The source code is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License
+// URI: http://creativecommons.org/licenses/by-nc-sa/3.0/
+// All Copyright reserved by Informatic Lab of Sun Yat-sen University
+#include<iostream>
+using std::cin;
+using std::cout;
+using std::endl;
+int main() {
+int num[26];
+int T, n, total, index;
+cin >> T;  //T个测例
+for (; T > 0; T--) {
+cin >> n;
+for (int i = 0; i < 26; i++)
+num[i] = 0;           //初始化置空
+num[0] = 1;                //第一个肯定放1
+index = 1;
+for (int i = 2; i <= n; i++) {
+for (total = 0; total < i;) {  //total用来表示当前第几个空牌位
+if (num[index] == 0)
+total++;
+if (total == i)
+break;
+if (index == n - 1)      //到达数组尾部跳回头部
+index = 1;
+else index++;
+}
+num[index] = i;           //放牌
+}
+for (int i = 0; i < n; i++) {
+cout << num[i] << ' ';
+}
+cout << endl;
+}
+}                                 
