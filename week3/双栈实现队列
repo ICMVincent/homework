@@ -1,0 +1,38 @@
+// Problem#: 15353
+// Submission#: 3899044
+// The source code is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License
+// URI: http://creativecommons.org/licenses/by-nc-sa/3.0/
+// All Copyright reserved by Informatic Lab of Sun Yat-sen University
+#include<stack>
+using std::stack;
+class Queue
+{
+public:
+	bool IsEmpty() const {
+		return firstStack.size() == 0;
+	}
+	int &front() {
+		while (!firstStack.empty()) {
+			secondStack.push(firstStack.top());
+			firstStack.pop();
+		}
+		return secondStack.top();
+	}
+	void push(int a) {
+		firstStack.push(a);
+	}
+	void pop() {
+		while (!firstStack.empty()) {
+			secondStack.push(firstStack.top());
+			firstStack.pop();
+		}
+		secondStack.pop();
+		while (!secondStack.empty()) {
+			firstStack.push(secondStack.top());
+			secondStack.pop();
+		}
+	}
+private:
+	stack<int > firstStack;
+	stack<int > secondStack;
+};                                 
