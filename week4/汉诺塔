@@ -1,0 +1,29 @@
+// Problem#: 15771
+// Submission#: 3938693
+// The source code is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License
+// URI: http://creativecommons.org/licenses/by-nc-sa/3.0/
+// All Copyright reserved by Informatic Lab of Sun Yat-sen University
+// Problem#: 15783
+// Submission#: 3935630
+// The source code is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License
+// URI: http://creativecommons.org/licenses/by-nc-sa/3.0/
+// All Copyright reserved by Informatic Lab of Sun Yat-sen University
+#include<iostream>
+using namespace std;
+int main() {
+    void hannota(int, int, int, int);
+    int count, num;
+    cin >> count;
+    while (count--) {
+        cin >> num;
+        hannota(num, 1, 3, 2);
+    }
+    return 0;
+}
+void hannota(int count, int start, int finish, int temp) {
+    if (count > 0) {
+        hannota(count - 1, start, temp, finish);
+        cout << "move disk " << count << " from peg " << start << " to peg " << finish << endl;
+        hannota(count - 1, temp, finish, start);
+    }
+}                                 
