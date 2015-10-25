@@ -1,0 +1,188 @@
+/*Description
+ 请实现一个只包含加减乘除运算的简单计算器，忽略式子中的所有空格，输入格式是正确的，不需要判断，并且式子中不包含括号。
+
+Input
+ 第一行只有一个整数m，代表有m个测试用例
+
+接下来有m行，每一行是一个测试用例，代表要求计算的式子
+Output
+ 对于每个测试用例，输出一行，每一行只有一个数，表示式子的运算结果，保留3位小数（四舍五入）
+
+Sample Input
+ Copy sample input to clipboard 
+2
+1+2
+1/3
+Sample Output
+3.000
+0.333
+*/
+// Problem#: 15768
+// Submission#: 3944384
+// The source code is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License
+// URI: http://creativecommons.org/licenses/by-nc-sa/3.0/
+// All Copyright reserved by Informatic Lab of Sun Yat-sen University
+#include <cstdio>
+#include <cstdlib>
+#include <iostream>
+#include <string>
+#include <queue>
+#include <cctype>
+using std::string;
+using std::queue;
+using std::cin;
+using std::cout;
+
+bool isOperator(char c) {
+    if (c == '+' || c == '-' || c == '*' || c == '/') {
+        return true;
+    } else {
+        return false;
+    }
+}
+void getNumberAndOperator(string& src, queue<double>& number, queue<char>& op) {
+    int len = src.length();
+    char num[100];
+    int i = 0;
+    while (i < len && isspace(src[i])) i++;
+    if (i < len && (src[i] == '-' || isdigit(src[i]))) {
+        int j = 0;
+        if (src[i] == '-') {    // first minus
+            num[j++] = src[i++];
+            while (i < len && isspace(src[i])) i++;
+        }
+        if (src[i] == '-') {    // two minus
+            j--;
+            i++;
+        }
+        while (i < len && isdigit(src[i])) {
+            num[j++] = src[i++];
+        }
+        num[j] = '\0';
+        if (i < len && src[i] == '.') {
+            num[j++] = src[i++];
+            while (i < len && isdigit(src[i])) {
+                num[j++] = src[i++];
+            }
+            num[j] = '\0';
+        }
+        number.push(atof(num));
+    }
+    while (i < len) {
+        while (i < len && isspace(src[i])) i++;
+        if (i < len && isOperator(src[i])) {
+            op.push(src[i++]);
+        }
+        while (i < len && isspace(src[i])) i++;
+        if (i < len && (isdigit(src[i]) || src[i] == '-') ) {
+            int j = 0;
+            if (src[i] == '-') {
+                num[j++] = src[i++];
+                while (i < len && isspace(src[i])) i++;
+            }
+            while (i < len && isdigit(src[i])) {
+                num[j++] = src[i++];
+            }
+            num[j] = '\0';
+            if (i < len && src[i] == '.') {
+                num[j++] = src[i++];
+                while (i < len && isdigit(src[i])) {
+                    num[j++] = src[i++];
+                }
+                num[j] = '\0';
+            }
+            number.push(atof(num));
+        }
+    }
+}
+
+double compute(queue<double>& number, queue<char>& op) {
+    if (number.empty()) {
+        return 0;
+    }
+    // getNumberAndOperator(src);
+    char op1, op2;
+    double num1 = 0, num2 = 0;
+    num1 = number.front();
+    number.pop();
+    while (!op.empty() && (op.front() == '*' || op.front() == '/')) {
+        op1 = op.front();
+        op.pop();
+        if ('*' == op1) {
+            num1 *= number.front();
+            number.pop();
+        } else if ('/' == op1) {
+            num1 /= number.front();
+            number.pop();
+        }
+    }
+    while (!op.empty()) {
+        op1 = op.front();
+        op.pop();
+        num2 = number.front();
+        number.pop();
+        while (!op.empty() && (op.front() == '*' || op.front() == '/')) {
+            op2 = op.front();
+            op.pop();
+            if (op2 == '*') {
+                num2 *= number.front();
+                number.pop();
+            } else if (op2 == '/') {
+                num2 /= number.front();
+                number.pop();
+            }
+        }
+        ('+' == op1) ? num1 += num2 : num1 -= num2;
+    }
+    // printf("%.3lf\n", num1);
+    while (!number.empty()) {
+        number.pop();
+    }
+    while (!op.empty()) {
+        op.pop();
+    }
+    return num1;
+}
+
+double preCompute(string& input) {
+    double ans;
+    size_t i;
+    while ((i = input.find("(")) != string::npos) {
+        size_t j;
+        for (j = i + 1; j < input.length(); j++) {
+            if (input[j] == ')') {
+                break;
+            } else if (input[j] == '(') {
+                i = j;
+            }
+        }
+        if (j < input.length()) {
+            char temp[100];
+            string sub = input.substr(i + 1, j - i - 1);
+            ans = preCompute(sub);
+            // cout << sub << " == " << ans << '\n';   // print for detection
+            snprintf(temp, sizeof(temp), "%lf", ans);
+            input.replace(i, j - i + 1, temp);
+        }
+    }
+    queue<double> preNum;
+    queue<char> preOp;
+    getNumberAndOperator(input, preNum, preOp);
+    ans = compute(preNum, preOp);
+    // cout << input << " == " << ans << '\n';
+    return ans;
+}
+
+int main() {
+    string input;
+    double ans;
+    int t;
+    scanf("%d", &t);
+    getline(cin, input);
+    while (t-- > 0) {
+        getline(cin, input);
+        ans = preCompute(input);
+        printf("%.3lf\n", ans);
+    }
+    return 0;
+}                                 
