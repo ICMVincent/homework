@@ -1,0 +1,64 @@
+/*Time Limit: 1sec    Memory Limit:256MB Description
+小明喜欢发短信，一天他突然想出一种定义短信中单词的值的方法，也许能够揭示某种规律。
+小明的手机键盘如下图所示：
+
+
+
+
+
+
+输入法为字母输入，即每次输入一个字母，例如需要输入字母x，由于x在数字键9上，排在第二位，因此需要按下9键两次。
+小明定义单词的值如下：单词中每个字母（不区分大小写）的值等于按键数值与按键次数之积，单词的值等于所有字母的值之和。如单词word的值为9+6*3+7*3+3=51。
+Input
+第一行给出单词数T（1<=T<=100,000）。
+接下来T行，每行一个单词，单词最大长度不超过100。
+Output
+输出T行，每行为单词的对应值。
+Sample Input
+ Copy sample input to clipboard 
+3
+Word
+I
+DaySample Output
+51
+12
+32
+*/
+// Problem#: 15264
+// Submission#: 3860762
+// The source code is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License
+// URI: http://creativecommons.org/licenses/by-nc-sa/3.0/
+// All Copyright reserved by Informatic Lab of Sun Yat-sen University
+#include<iostream>
+#include<map>
+#include<stdio.h>
+#include<string.h>
+using namespace std;
+int main() {
+    char alp[26] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
+    'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w','x',
+    'y', 'z'};
+    int num[26] = {2, 4, 6, 3,6, 9, 4, 8, 12, 5, 10, 15, 6, 12, 18,
+    7, 14, 21, 28, 8, 16, 24, 9, 18, 27, 36};
+    map<char, int> keyboard;
+    for (int i = 0; i < 26; i++) {
+        keyboard[alp[i]] = num[i];
+    }
+    int words;
+    int sum = 0;
+    char *word;
+    word = new char[101];
+    scanf("%d", &words);
+    for (int i = 0; i < words; i++) {
+        scanf("%s", word);
+        int len = strlen(word);
+        for (int j = 0; j < len; j++) {
+            if ( 'A' <= word[j] && word[j] <= 'Z')
+                 word[j] = word[j] + 32;
+            sum += keyboard[word[j]];
+        }
+        printf("%d\n", sum);
+        sum = 0;
+   }
+   return 0;
+}                                 
