@@ -1,0 +1,88 @@
+/*Description
+新活有个舞蹈室，并且只有一个舞蹈室，假设申请时间以小时为单位，每天24个小时，每周就是168小时，我们规定申请时间从每周一的0点开始递增，比如申请时间区间为【1，24】就代表周一的0点到24点，时间区间【25，48】就代表周二的0点到24点，以此类推。
+现在假定你是舞蹈室的管理人员，面对一批使用舞蹈室的申请，你希望舞蹈室能尽可能给更多人使用（也就是尽可能满足更多申请数量，请注意，这里要求的并不是舞蹈室被使用的时间最多，而是被批准的申请数量最多），请你写一个程序判断这批申请里面最多能有多少个能被满足。比如有下列两个申请：
+【10，12】
+【11，160】
+由于同一时刻舞蹈室只能给一个申请使用，所以这两个申请最多只能满足1个。
+又如以下三个申请：
+【10，12】
+【155，168】
+
+
+【11，160】
+
+由于要求是让更多的申请能通过审批，所以我们选择的是【10，12】和【155，168】这两个区间，而不是【11，160】这个区间，所以结果是2。
+
+Input
+第一行是一个数字n，代表接下来有n个测试用例。
+对于每一个测试用例，格式如下：
+第一行是一个数字m，代表本周有m个申请，0 <= m < 150。
+
+接下来的m行，每行有两个数字，中间用空格隔开，代表该申请的时间区间（注意时间区间都是闭区间，且时间区间一定合法，不会超出【1，168】之外）
+ 
+
+Output
+ 每个测试用例输出一行，只有一个数字，代表最多能满足的申请个数。
+
+对于这n个测试用例，输出总共有n行
+
+
+ 
+
+Sample Input
+ Copy sample input to clipboard 
+2
+2
+10 12
+11 160
+3
+10 12
+155 168
+11 160
+Sample Output
+1
+2
+*/
+// Problem#: 15255
+// Submission#: 3862064
+// The source code is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License
+// URI: http://creativecommons.org/licenses/by-nc-sa/3.0/
+// All Copyright reserved by Informatic Lab of Sun Yat-sen University
+#include<iostream>
+using namespace std;
+struct Time {
+	int b, e;
+};
+int main() {
+	int n, m, i, j, count;
+	Time T[150];
+	Time temp;
+	cin >> n;
+	for (; n > 0; n--) {
+		cin >> m;
+		for (j = 0; j < m; j++) {
+			cin >> T[j].b >> T[j].e;
+		}
+		for (j = 0; j < m - 1; j++) {
+			for (i = 0; i < m - 1 - j; i++) {
+				if (T[i].e >= T[i + 1].e) {
+					temp = T[i];
+					T[i] = T[i + 1];
+					T[i + 1] = temp;
+				}
+			}
+		}
+		for (i = 0, count = 0; i < m; i++) {
+			if (i == 0) {
+				count++;
+				temp = T[i];
+				continue;
+			}
+			if (T[i].b>temp.e) {
+				temp = T[i];
+				count++;
+			}
+		}
+		cout << count << endl;
+	}
+}                                 
