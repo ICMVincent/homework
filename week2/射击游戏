@@ -1,23 +1,3 @@
-/*Description
-
-小明很喜欢玩射击游戏。这周末，他完成了数据结构作业之后，又来到了射击娱乐场。他从老板那租了一把步枪和装有N发子弹的弹夹。注意：所有的子弹都从枪口上膛。在射击的过程中，小明每次都有两种选择：从弹夹中取出一颗子弹上膛，或者打一发子弹出去。恰巧，这周二，小明刚上了数据结构中《栈》那一章，于是，他想通过“栈”的数据结构来算出究竟有多少种不同的子弹打出顺序。假设N颗子弹的编号为1,2,…,N。子弹从弹夹中取出的顺序也是从1到N。你可以帮小明解决这个问题吗？
-
-Input
-可能有多个测试输入，第一行给出总共的测试输入的个数。
-对于每个测试输入，只有一个整数N。
-Output
-输出一个整数，即所有不同序列的总数目。
-Sample Input
- Copy sample input to clipboard 
-1
-3Sample Output
-5
-*/
-// Problem#: 15253
-// Submission#: 3855980
-// The source code is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License
-// URI: http://creativecommons.org/licenses/by-nc-sa/3.0/
-// All Copyright reserved by Informatic Lab of Sun Yat-sen University
 #include<iostream>
 using std::cout;
 using std::cin;
