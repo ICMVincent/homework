@@ -33,4 +33,4 @@ int main() {
         split(n, 0);
     }
     return 0;
-}                                
+}                               
