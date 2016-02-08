@@ -1,31 +1,3 @@
-/*Description
-为了测试某种药物对小白鼠方向感的影响，生物学家在实验室做了一个矩形迷宫，入口和出口都确定为唯一的，且分布在矩形的不同边上。现在让你算出小白鼠最短需要走多少步，才可以从入口走到出口。
-Input
-共N+1行，第一行为N（N=0表示输入结束），以下N行N列0-1矩阵，1表示不能通过，0表示可以通过（左上角和右下角为0，即入口和出口），其中N<30。
-Output
-只有一个数，为最少要走的格子数。0表示没有路径。
-Sample Input
- Copy sample input to clipboard 
-5
-0 1 1 1 1
-0 0 1 1 1
-1 0 0 0 1
-1 1 1 0 1
-1 1 1 0 0
-4
-0 0 1 1
-0 0 0 1
-1 1 1 1
-1 1 1 0
-0Sample Output
-9
-0
-*/
-// Problem#: 15769
-// Submission#: 3941249
-// The source code is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License
-// URI: http://creativecommons.org/licenses/by-nc-sa/3.0/
-// All Copyright reserved by Informatic Lab of Sun Yat-sen University
 #include<iostream>
 #include<queue>
 using namespace std;
