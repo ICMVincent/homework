@@ -1,28 +1,3 @@
-/*Time Limit: 1sec    Memory Limit:256MB Description
-子犇是一只超级懒惰的大牛...每次他在给别人钱的时候都必须用最少数量的钱...因为他懒得多抽一张钱出来...
-纸币的面值共有6种，分别是：100  50  20  10  5  1，明天他要给升哥383元，请预测他会拿出多少张纸币...
-（假设子犇大牛拥有6种纸币的数量均为无穷大，没错，子犇是真·土豪）
-Input
- 第一行输入一个数字n代表测试用例个数。
-
-接下来的n行，每行是一个数字，代表子犇大牛要给升哥的钱数。
-Output
- 对于每一行钱数，输出一个数字，代表纸币张数，每个数字占一行。
-
-
-Sample Input
- Copy sample input to clipboard 
-2
-15
-3
-Sample Output
-2
-3*/
-// Problem#: 15115
-// Submission#: 3833868
-// The source code is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License
-// URI: http://creativecommons.org/licenses/by-nc-sa/3.0/
-// All Copyright reserved by Informatic Lab of Sun Yat-sen University
 #include<iostream>
 const int SIZE = 6;
 int coin[6] = {10000, 5000, 2000, 1000, 500, 100};
